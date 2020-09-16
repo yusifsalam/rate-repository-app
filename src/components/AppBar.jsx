@@ -1,29 +1,30 @@
-import React from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import Text from './Text';
+import React from "react";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import Text from "./Text";
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 10,
     display: "flex",
   },
   appBap: {
-    backgroundColor: '#24292e',
-    color: 'white',
-    fontWeight: 'bold',
+    backgroundColor: "#24292e",
+    color: "white",
+    fontWeight: "bold",
     opacity: 10,
     height: 70,
-    paddingTop: 35
-  }
+    paddingTop: 35,
+  },
   // ...
 });
 
 const AppBar = () => {
-  return <View style={styles.container}>
-    <TouchableWithoutFeedback>
-      <Text style={styles.appBap}> Repositories</Text>
-    </TouchableWithoutFeedback>
-  </View>;
+  return (
+    <View style={styles.container}>
+      <TouchableWithoutFeedback>
+        <Text style={styles.appBap}> Repositories</Text>
+      </TouchableWithoutFeedback>
+    </View>
+  );
 };
 
 export default AppBar;
