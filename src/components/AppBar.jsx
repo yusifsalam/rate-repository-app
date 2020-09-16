@@ -1,5 +1,10 @@
 import React from "react";
-import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  ScrollView,
+} from "react-native";
 import { Link } from "react-router-native";
 import Text from "./Text";
 
@@ -21,12 +26,14 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <Link to="/" component={TouchableWithoutFeedback}>
-        <Text style={styles.appBap}> Repositories</Text>
-      </Link>
-      <Link to="/sign-in" component={TouchableWithoutFeedback}>
-        <Text style={styles.appBap}>Sign in</Text>
-      </Link>
+      <ScrollView horizontal>
+        <Link to="/" component={TouchableWithoutFeedback}>
+          <Text style={styles.appBap}> Repositories</Text>
+        </Link>
+        <Link to="/sign-in" component={TouchableWithoutFeedback}>
+          <Text style={styles.appBap}>Sign in</Text>
+        </Link>
+      </ScrollView>
     </View>
   );
 };
