@@ -12,14 +12,21 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
+  errorStyle: {
+    borderColor: "#d73a4a",
+  },
 });
 
-const TextInput = ({ style, error, ...props }) => {
+const TextInput = ({ style, error, touched, ...props }) => {
   const textInputStyle = [style];
-
+  const displayError = error && touched;
   return (
     <NativeTextInput
-      style={[styles.textComponent, textInputStyle]}
+      style={[
+        styles.textComponent,
+        displayError ? styles.errorStyle : {},
+        textInputStyle,
+      ]}
       {...props}
     />
   );

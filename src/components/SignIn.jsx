@@ -2,12 +2,12 @@ import React from "react";
 import { TouchableWithoutFeedback, View, StyleSheet } from "react-native";
 import FormikTextInput from "./FormikTextInput";
 import { Formik } from "formik";
+import * as yup from "yup";
 import theme from "../theme";
-
 import Text from "./Text";
 
 const initialValues = {
-  email: "",
+  username: "",
   password: "",
 };
 
@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     color: "white",
     fontSize: theme.fontSizes.subheading,
-    // height: 50,
     display: "flex",
     margin: 10,
     borderRadius: 5,
@@ -28,15 +27,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
+  buttonDisabled: {
+    backgroundColor: theme.colors.textSecondary,
+  },
 });
 
-const SignInForm = ({ onSubmit }) => {
+const validationSchema = yup.object().shape({
+  username: yup.string().required("Username is required"),
+  password: yup.string().required("Password is required"),
+});
+
+const SignInForm = ({ onSubmit, errors }) => {
+  const buttonOn = Object.keys(errors).length === 0 ? true : null;
   return (
     <View>
       <FormikTextInput name="username" placeholder="Username" />
       <FormikTextInput name="password" placeholder="Password" secureTextEntry />
-      <TouchableWithoutFeedback onPress={onSubmit}>
-        <Text style={styles.button}>Sign In</Text>
+      <TouchableWithoutFeedback onPress={onSubmit} disabled={buttonOn === null}>
+        <Text style={[styles.button, buttonOn ?? styles.buttonDisabled]}>
+          Sign In
+        </Text>
       </TouchableWithoutFeedback>
     </View>
   );
@@ -47,8 +57,14 @@ const SignInView = () => {
     console.log(values);
   };
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}
+    >
+      {({ handleSubmit, errors }) => (
+        <SignInForm onSubmit={handleSubmit} errors={errors} />
+      )}
     </Formik>
   );
 };
