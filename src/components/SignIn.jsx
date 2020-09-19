@@ -6,6 +6,7 @@ import * as yup from "yup";
 import theme from "../theme";
 import Text from "./Text";
 import useSignIn from "../hooks/useSignIn";
+import { useHistory } from "react-router-native";
 
 const initialValues = {
   username: "",
@@ -54,12 +55,14 @@ const SignInForm = ({ onSubmit, errors }) => {
 };
 
 const SignInView = () => {
+  let history = useHistory();
   const [signIn] = useSignIn();
   const onSubmit = async (values) => {
     const { username, password } = values;
     try {
       const { data } = await signIn({ username, password });
       console.log(data);
+      history.push("/");
     } catch (e) {
       console.log("shit is borked yo");
       console.log(e);
