@@ -40,13 +40,13 @@ const validationSchema = yup.object().shape({
 });
 
 const SignInForm = ({ onSubmit, errors }) => {
-  const buttonOn = Object.keys(errors).length === 0 ? true : null;
+  const buttonOn = Object.keys(errors).length === 0;
   return (
     <View>
       <FormikTextInput name="username" placeholder="Username" />
       <FormikTextInput name="password" placeholder="Password" secureTextEntry />
-      <TouchableWithoutFeedback onPress={onSubmit} disabled={buttonOn === null}>
-        <Text style={[styles.button, buttonOn ?? styles.buttonDisabled]}>
+      <TouchableWithoutFeedback onPress={onSubmit} disabled={!buttonOn}>
+        <Text style={[styles.button, !buttonOn && styles.buttonDisabled]}>
           Sign In
         </Text>
       </TouchableWithoutFeedback>

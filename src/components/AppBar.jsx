@@ -43,11 +43,9 @@ const AppBar = () => {
           <Text style={styles.appBap}> Repositories</Text>
         </Link>
         {userLoggedIn ? (
-          <Link to="/sign-out">
-            <TouchableWithoutFeedback onPress={handleSubmit}>
-              <Text style={styles.appBap}>Sign out </Text>
-            </TouchableWithoutFeedback>
-          </Link>
+          <TouchableWithoutFeedback onPress={handleSubmit}>
+            <Text style={styles.appBap}>Sign out </Text>
+          </TouchableWithoutFeedback>
         ) : (
           <Link to="/sign-in" component={TouchableWithoutFeedback}>
             <Text style={styles.appBap}>Sign in</Text>
