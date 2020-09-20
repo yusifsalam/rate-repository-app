@@ -25,6 +25,7 @@ const Main = () => {
         <Route path="/sign-in" exact>
           <SignIn />
         </Route>
+        <Route path="/sing-out" exact />
       </Switch>
     </View>
   );

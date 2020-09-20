@@ -15,21 +15,25 @@ const useSignIn = () => {
   const apolloClient = useApolloClient();
 
   const signIn = async ({ username, password }) => {
+    if (!username || !password) {
+      return null;
+    }
     const tokenObject = await mutate({
       variables: { credentials: { username, password } },
     });
-    const tokenValid =
-      tokenObject &&
-      tokenObject.data &&
-      tokenObject.data.authorize &&
-      tokenObject.data.authorize.accessToken;
-    const token = tokenValid ? tokenObject.data.authorize.accessToken : null;
+    const token = tokenObject?.data?.authorize?.accessToken || null;
     await authStorage.setAccessToken(token);
     apolloClient.resetStore();
     return tokenObject;
   };
 
-  return [signIn, result];
+  const signOut = async () => {
+    console.log("removing access token??");
+    await authStorage.removeAccessToken();
+    apolloClient.resetStore();
+  };
+
+  return [signIn, result, signOut];
 };
 
 export default useSignIn;

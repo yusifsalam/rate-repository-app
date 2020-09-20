@@ -55,16 +55,15 @@ const SignInForm = ({ onSubmit, errors }) => {
 };
 
 const SignInView = () => {
-  let history = useHistory();
+  const history = useHistory();
   const [signIn] = useSignIn();
   const onSubmit = async (values) => {
     const { username, password } = values;
     try {
       const { data } = await signIn({ username, password });
-      console.log(data);
+      console.log("sign in data", data);
       history.push("/");
     } catch (e) {
-      console.log("shit is borked yo");
       console.log(e);
     }
   };
