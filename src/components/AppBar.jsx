@@ -52,9 +52,14 @@ const AppBar = () => {
             </TouchableWithoutFeedback>
           </View>
         ) : (
-          <Link to="/sign-in" component={TouchableWithoutFeedback}>
-            <Text style={styles.appBap}>Sign in</Text>
-          </Link>
+          <View style={{ flexDirection: "row" }}>
+            <Link to="/sign-in" component={TouchableWithoutFeedback}>
+              <Text style={styles.appBap}>Sign in</Text>
+            </Link>
+            <Link to="/sign-up" component={TouchableWithoutFeedback}>
+              <Text style={styles.appBap}>Sign up</Text>
+            </Link>
+          </View>
         )}
       </ScrollView>
     </View>
