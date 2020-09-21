@@ -43,9 +43,14 @@ const AppBar = () => {
           <Text style={styles.appBap}> Repositories</Text>
         </Link>
         {userLoggedIn ? (
-          <TouchableWithoutFeedback onPress={handleSubmit}>
-            <Text style={styles.appBap}>Sign out </Text>
-          </TouchableWithoutFeedback>
+          <View style={{ flexDirection: "row" }}>
+            <Link to="/add-review" component={TouchableWithoutFeedback}>
+              <Text style={styles.appBap}>Create a review</Text>
+            </Link>
+            <TouchableWithoutFeedback onPress={handleSubmit}>
+              <Text style={styles.appBap}>Sign out </Text>
+            </TouchableWithoutFeedback>
+          </View>
         ) : (
           <Link to="/sign-in" component={TouchableWithoutFeedback}>
             <Text style={styles.appBap}>Sign in</Text>

@@ -6,6 +6,7 @@ import RepositoryList from "./RepositoryList";
 import SingleRepository from "./RepositorySingleView";
 import AppBar from "./AppBar";
 import SignIn from "./SignIn";
+import ReviewForm from "./ReviewForm";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,9 @@ const Main = () => {
         </Route>
         <Route path="/sign-in" exact>
           <SignIn />
+        </Route>
+        <Route path="/add-review" exact>
+          <ReviewForm />
         </Route>
         <Route path="/repos/:id" component={SingleRepository} />
         <Redirect to="/" />

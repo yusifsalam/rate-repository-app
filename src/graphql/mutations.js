@@ -7,3 +7,12 @@ export const AUTHORIZE = gql`
     }
   }
 `;
+
+export const ADD_REVIEW = gql`
+  mutation createReview($review: CreateReviewInput) {
+    createReview(review: $review) {
+      id
+      repositoryId
+    }
+  }
+`;
