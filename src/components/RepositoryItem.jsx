@@ -58,42 +58,69 @@ const prettyPrintNumber = (n) => {
 
 const RepositoryItem = ({ item }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="repoItem">
       <View style={styles.descriptionContainer}>
         <Image source={{ uri: item.ownerAvatarUrl }} style={styles.avatar} />
         <View style={styles.textDescription}>
-          <Text fontWeight="bold" fontSize="heading" style={styles.textItem}>
+          <Text
+            fontWeight="bold"
+            fontSize="heading"
+            style={styles.textItem}
+            testID="repoItemFullName"
+          >
             {item.fullName}
           </Text>
-          <Text color="textSecondary" style={styles.textItem}>
+          <Text
+            color="textSecondary"
+            style={styles.textItem}
+            testID="repoItemDescription"
+          >
             {item.description}{" "}
           </Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.languageBox}>{item.language}</Text>
+            <Text style={styles.languageBox} testID="repoItemLanguage">
+              {item.language}
+            </Text>
           </View>
         </View>
       </View>
       <View style={styles.statsContainer}>
         <View style={styles.statsItem}>
-          <Text style={styles.statsItemText} fontWeight="bold">
+          <Text
+            style={styles.statsItemText}
+            fontWeight="bold"
+            testID="repoItemStarCount"
+          >
             {prettyPrintNumber(item.stargazersCount)}
           </Text>
           <Text style={styles.statsItemText}> Stars</Text>
         </View>
         <View style={styles.statsItem}>
-          <Text style={styles.statsItemText} fontWeight="bold">
+          <Text
+            style={styles.statsItemText}
+            fontWeight="bold"
+            testID="repoItemForkCount"
+          >
             {prettyPrintNumber(item.forksCount)}
           </Text>
           <Text style={styles.statsItemText}>Forks</Text>
         </View>
         <View style={styles.statsItem}>
-          <Text style={styles.statsItemText} fontWeight="bold">
+          <Text
+            style={styles.statsItemText}
+            fontWeight="bold"
+            testID="repoItemReviewCount"
+          >
             {prettyPrintNumber(item.reviewCount)}
           </Text>
           <Text style={styles.statsItemText}>Reviews</Text>
         </View>
         <View style={styles.statsItem}>
-          <Text style={styles.statsItemText} fontWeight="bold">
+          <Text
+            style={styles.statsItemText}
+            fontWeight="bold"
+            testID="repoItemRatingAverage"
+          >
             {prettyPrintNumber(item.ratingAverage)}
           </Text>
           <Text style={styles.statsItemText}>Rating</Text>
