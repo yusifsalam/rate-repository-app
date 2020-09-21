@@ -94,7 +94,7 @@ const SignInView = () => {
       console.log(e);
     }
   };
-  return <SignInViewContainer history={history} onSubmit={onSubmit} />;
+  return <SignInViewContainer onSubmit={onSubmit} />;
 };
 
 export default SignInView;
