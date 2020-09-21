@@ -1,7 +1,8 @@
 import React from "react";
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
+import { Route, useHistory } from "react-router-native";
 
 const styles = StyleSheet.create({
   separator: {
@@ -11,15 +12,20 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, handlePress }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
+
   return (
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => <RepositoryItem item={item} />}
+      renderItem={({ item }) => (
+        <TouchableOpacity onPress={() => handlePress(item.id)}>
+          <RepositoryItem item={item} showGithub={false} />
+        </TouchableOpacity>
+      )}
       keyExtractor={(item) => item.id}
     />
   );
@@ -27,7 +33,16 @@ export const RepositoryListContainer = ({ repositories }) => {
 
 const RepositoryList = () => {
   const { repositories } = useRepositories();
-  return <RepositoryListContainer repositories={repositories} />;
+  const history = useHistory();
+  const handlePress = (itemURI) => {
+    history.push(`/repos/${itemURI}`);
+  };
+  return (
+    <RepositoryListContainer
+      repositories={repositories}
+      handlePress={handlePress}
+    />
+  );
 };
 
 export default RepositoryList;

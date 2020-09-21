@@ -2,13 +2,13 @@ import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
+import * as Linking from "expo-linking";
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     marginBottom: 5,
     flexDirection: "column",
-    flexGrow: 1,
   },
   descriptionContainer: {
     flexDirection: "row",
@@ -20,12 +20,13 @@ const styles = StyleSheet.create({
     borderRadius: 2.5,
   },
   textDescription: {
-    marginLeft: 15,
-    flexGrow: 0,
+    marginHorizontal: 15,
+    marginBottom: 10,
   },
   textItem: {
     marginBottom: 10,
   },
+
   languageBox: {
     backgroundColor: theme.colors.primary,
     fontSize: theme.fontSizes.subheading,
@@ -50,13 +51,35 @@ const styles = StyleSheet.create({
   statsItemText: {
     marginBottom: 5,
   },
+  buttonContainer: {
+    justifyContent: "center",
+    // flex: 1,
+    margin: 10,
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    color: "white",
+    fontSize: theme.fontSizes.subheading,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+    overflow: "hidden",
+    textAlign: "center",
+    alignItems: "center",
+    padding: 10,
+  },
 });
 
 const prettyPrintNumber = (n) => {
   return n > 999 ? (n / 1000).toFixed(1) + "k" : n;
 };
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, showGithub }) => {
+  if (!item) return null;
+
+  const handleButton = () => {
+    Linking.openURL(item.url);
+  };
   return (
     <View style={styles.container} testID="repoItem">
       <View style={styles.descriptionContainer}>
@@ -125,6 +148,15 @@ const RepositoryItem = ({ item }) => {
           </Text>
           <Text style={styles.statsItemText}>Rating</Text>
         </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        {showGithub && (
+          <View>
+            <Text style={styles.button} onPress={handleButton}>
+              Open in GitHub
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );
