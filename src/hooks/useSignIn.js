@@ -27,13 +27,7 @@ const useSignIn = () => {
     return tokenObject;
   };
 
-  const signOut = async () => {
-    console.log("removing access token??");
-    await authStorage.removeAccessToken();
-    apolloClient.resetStore();
-  };
-
-  return [signIn, result, signOut];
+  return [signIn, result];
 };
 
 export default useSignIn;
