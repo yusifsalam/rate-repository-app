@@ -43,14 +43,41 @@ const SignInForm = ({ onSubmit, errors }) => {
   const buttonOn = Object.keys(errors).length === 0;
   return (
     <View>
-      <FormikTextInput name="username" placeholder="Username" />
-      <FormikTextInput name="password" placeholder="Password" secureTextEntry />
-      <TouchableWithoutFeedback onPress={onSubmit} disabled={!buttonOn}>
+      <FormikTextInput
+        name="username"
+        placeholder="Username"
+        testID="usernameField"
+      />
+      <FormikTextInput
+        name="password"
+        placeholder="Password"
+        secureTextEntry
+        testID="passwordField"
+      />
+      <TouchableWithoutFeedback
+        onPress={onSubmit}
+        disabled={!buttonOn}
+        testID="submitButton"
+      >
         <Text style={[styles.button, !buttonOn && styles.buttonDisabled]}>
           Sign In
         </Text>
       </TouchableWithoutFeedback>
     </View>
+  );
+};
+
+export const SignInViewContainer = ({ onSubmit }) => {
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}
+    >
+      {({ handleSubmit, errors }) => (
+        <SignInForm onSubmit={handleSubmit} errors={errors} />
+      )}
+    </Formik>
   );
 };
 
@@ -67,17 +94,7 @@ const SignInView = () => {
       console.log(e);
     }
   };
-  return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      validationSchema={validationSchema}
-    >
-      {({ handleSubmit, errors }) => (
-        <SignInForm onSubmit={handleSubmit} errors={errors} />
-      )}
-    </Formik>
-  );
+  return <SignInViewContainer history={history} onSubmit={onSubmit} />;
 };
 
 export default SignInView;
