@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  FlatList,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Keyboard,
-} from "react-native";
+import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
 import { useHistory } from "react-router-native";
