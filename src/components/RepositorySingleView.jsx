@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { FlatList } from "react-native";
 import ReviewItem from "./ReviewItem";
 import { ItemSeparator } from "./RepositoryList";
+import useReviews from "../hooks/useReviews";
 
 const RepositorySingleView = ({ repo }) => {
   return <RepositoryItem item={repo} showGithub={true} />;
@@ -13,12 +14,14 @@ const RepositorySingleView = ({ repo }) => {
 
 const SingleRepository = () => {
   const id = useParams().id;
-  const { data } = useQuery(GET_REPOSITORY_WITH_REVIEWS, {
-    variables: { repoId: id },
-    fetchPolicy: "cache-and-network",
+  const { repository, reviews, fetchMore } = useReviews({
+    repoId: id,
+    first: 5,
   });
-  const repository = data?.repository;
-  const reviews = repository?.reviews?.edges;
+  const handleEndReach = () => {
+    console.log("end reached");
+    fetchMore();
+  };
   return (
     <FlatList
       data={reviews}
@@ -26,6 +29,8 @@ const SingleRepository = () => {
       keyExtractor={(item) => item.node.id}
       ListHeaderComponent={() => <RepositorySingleView repo={repository} />}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReachedThreshold={0.5}
+      onEndReached={handleEndReach}
     />
   );
 };

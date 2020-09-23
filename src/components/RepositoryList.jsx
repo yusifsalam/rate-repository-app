@@ -124,6 +124,8 @@ export class RepositoryListContainer extends React.Component {
         )}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={this.renderHeader}
+        onEndReached={this.props.onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }
@@ -148,11 +150,12 @@ const RepositoryList = () => {
   const [searchKey, setSeachKey] = useState("");
   const [serachKeywordValue] = useDebounce(searchKey, 1000);
   const sortObject = sortMap[repoSort];
-  const { repositories } = useRepositories(
-    sortObject.orderBy,
-    sortObject.orderDirection,
-    serachKeywordValue
-  );
+  const { repositories, fetchMore } = useRepositories({
+    first: 5,
+    orderBy: sortObject.orderBy,
+    ordderDirection: sortObject.orderDirection,
+    searchKeyword: serachKeywordValue,
+  });
   const history = useHistory();
   const handlePress = (itemURI) => {
     history.push(`/repos/${itemURI}`);
@@ -165,6 +168,9 @@ const RepositoryList = () => {
   const handleSearch = (value) => {
     setSeachKey(value);
   };
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <View>
@@ -175,6 +181,7 @@ const RepositoryList = () => {
         sortValue={repoSort}
         handleSearch={handleSearch}
         searchValue={searchKey}
+        onEndReach={onEndReach}
       />
     </View>
   );
