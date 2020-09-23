@@ -28,6 +28,7 @@ export const REVIEW_DETAILS = gql`
     }
     repository {
       fullName
+      id
     }
   }
 `;

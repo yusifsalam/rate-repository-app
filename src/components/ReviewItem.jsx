@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Text from "./Text";
+import theme from "../theme";
+import { useHistory } from "react-router-native";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -39,9 +41,39 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
   },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    flexGrow: 1,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    color: "white",
+    fontSize: theme.fontSizes.subheading,
+    display: "flex",
+    margin: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+    overflow: "hidden",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  redButton: {
+    backgroundColor: "red",
+    borderColor: "red",
+  },
 });
 
 const ReviewItem = ({ review, ownReview }) => {
+  const history = useHistory();
+  const handleView = () => {
+    console.log(review);
+    history.push(`/repos/${review.node.repository.id}`);
+  };
   return (
     <View style={styles.mainContainer}>
       <View style={styles.topContainer}>
@@ -61,6 +93,17 @@ const ReviewItem = ({ review, ownReview }) => {
       <View style={styles.reviewContainer}>
         <Text style={styles.reviewText}>{review.node.text}</Text>
       </View>
+      {ownReview ? (
+        <View style={styles.buttonContainer}>
+          <Text style={styles.button} onPress={handleView}>
+            {" "}
+            View repository
+          </Text>
+          <Text style={[styles.button, styles.redButton]}>Delete review</Text>
+        </View>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
