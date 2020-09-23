@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Alert } from "react-native";
 import Text from "./Text";
-import theme from "../theme";
+import { buttonStyle } from "../theme";
 import { useHistory } from "react-router-native";
 import { useMutation } from "@apollo/react-hooks";
 import { DELETE_REVIEW } from "../graphql/mutations";
@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 10,
     paddingTop: 10,
-    // alignItems: "center",
   },
   rating: {
     backgroundColor: "white",
@@ -50,21 +49,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginBottom: 10,
   },
-  button: {
-    backgroundColor: theme.colors.primary,
-    color: "white",
-    fontSize: theme.fontSizes.subheading,
-    display: "flex",
-    margin: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: theme.colors.primary,
-    overflow: "hidden",
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-  },
+  button: buttonStyle,
   redButton: {
     backgroundColor: "red",
     borderColor: "red",
@@ -134,7 +119,6 @@ const ReviewItem = ({ review, ownReview }) => {
       {ownReview ? (
         <View style={styles.buttonContainer}>
           <Text style={styles.button} onPress={handleView}>
-            {" "}
             View repository
           </Text>
           <Text

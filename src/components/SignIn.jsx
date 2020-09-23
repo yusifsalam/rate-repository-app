@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback, View, StyleSheet } from "react-native";
 import FormikTextInput from "./FormikTextInput";
 import { Formik } from "formik";
 import * as yup from "yup";
-import theme from "../theme";
+import { buttonStyle, buttonDisabledStyle } from "../theme";
 import Text from "./Text";
 import useSignIn from "../hooks/useSignIn";
 import { useHistory } from "react-router-native";
@@ -14,24 +14,8 @@ const initialValues = {
 };
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: theme.colors.primary,
-    color: "white",
-    fontSize: theme.fontSizes.subheading,
-    display: "flex",
-    margin: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: theme.colors.primary,
-    overflow: "hidden",
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-  },
-  buttonDisabled: {
-    backgroundColor: theme.colors.textSecondary,
-  },
+  button: buttonStyle,
+  buttonDisabled: buttonDisabledStyle,
 });
 
 const validationSchema = yup.object().shape({

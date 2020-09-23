@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import FormikTextInput from "./FormikTextInput";
 import Text from "./Text";
-import theme from "../theme";
+import { buttonStyle, buttonDisabledStyle } from "../theme";
 import useReviewForm from "../hooks/useReviewForm";
 import { useHistory } from "react-router-native";
 
@@ -23,24 +23,8 @@ const validationSchema = yup.object().shape({
 });
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: theme.colors.primary,
-    color: "white",
-    fontSize: theme.fontSizes.subheading,
-    display: "flex",
-    margin: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: theme.colors.primary,
-    overflow: "hidden",
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-  },
-  buttonDisabled: {
-    backgroundColor: theme.colors.textSecondary,
-  },
+  button: buttonStyle,
+  buttonDisabled: buttonDisabledStyle,
 });
 
 const ReviewForm = ({ onSubmit, errors }) => {

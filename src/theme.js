@@ -18,4 +18,24 @@ const theme = {
   },
 };
 
+export const buttonStyle = {
+  backgroundColor: theme.colors.primary,
+  color: "white",
+  fontSize: theme.fontSizes.subheading,
+  display: "flex",
+  margin: 10,
+  borderRadius: 5,
+  borderWidth: 1,
+  borderColor: theme.colors.primary,
+  overflow: "hidden",
+  textAlign: "center",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: 10,
+};
+
+export const buttonDisabledStyle = {
+  backgroundColor: theme.colors.textSecondary,
+};
+
 export default theme;
