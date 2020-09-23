@@ -8,6 +8,7 @@ import AppBar from "./AppBar";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import ReviewForm from "./ReviewForm";
+import MyRewiews from "./MyReviews";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +34,9 @@ const Main = () => {
         </Route>
         <Route path="/add-review" exact>
           <ReviewForm />
+        </Route>
+        <Route path="/my-reviews" exact>
+          <MyRewiews />
         </Route>
         <Route path="/repos/:id" component={SingleRepository} />
         <Redirect to="/" />

@@ -18,12 +18,16 @@ export const REPO_DETAILS = gql`
 export const REVIEW_DETAILS = gql`
   fragment ReviewDetails on Review {
     id
+    repositoryId
     text
     rating
     createdAt
     user {
       id
       username
+    }
+    repository {
+      fullName
     }
   }
 `;

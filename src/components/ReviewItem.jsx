@@ -41,13 +41,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, ownReview }) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.topContainer}>
         <Text style={styles.rating}>{review.node.rating}</Text>
         <View style={styles.topRightContainer}>
-          <Text fontWeight="bold">{review.node.user.username}</Text>
+          <Text fontWeight="bold">
+            {ownReview
+              ? review.node.repository.fullName
+              : review.node.user.username}
+          </Text>
           <Text>
             {new Date(review.node.createdAt).toLocaleDateString("fi-fi")}
           </Text>

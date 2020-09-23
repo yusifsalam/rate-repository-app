@@ -47,6 +47,9 @@ const AppBar = () => {
             <Link to="/add-review" component={TouchableWithoutFeedback}>
               <Text style={styles.appBap}>Create a review</Text>
             </Link>
+            <Link to="my-reviews" component={TouchableWithoutFeedback}>
+              <Text style={styles.appBap}>My reviews</Text>
+            </Link>
             <TouchableWithoutFeedback onPress={handleSubmit}>
               <Text style={styles.appBap}>Sign out </Text>
             </TouchableWithoutFeedback>
