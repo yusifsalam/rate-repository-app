@@ -1,8 +1,11 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
 import { useHistory } from "react-router-native";
+import { useMutation } from "@apollo/react-hooks";
+import { DELETE_REVIEW } from "../graphql/mutations";
+import { useApolloClient } from "@apollo/client";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -70,9 +73,44 @@ const styles = StyleSheet.create({
 
 const ReviewItem = ({ review, ownReview }) => {
   const history = useHistory();
+  const apolloClient = useApolloClient();
+  const [mutate] = useMutation(DELETE_REVIEW, {
+    onError: (e) => {
+      console.error(e);
+    },
+  });
+  const deleteReview = async ({ reviewId }) => {
+    if (!reviewId) return null;
+    const response = await mutate({
+      variables: { id: reviewId },
+    });
+    return response;
+  };
   const handleView = () => {
-    console.log(review);
     history.push(`/repos/${review.node.repository.id}`);
+  };
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete review",
+      "You are about to delete this review",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("pressed cancel!"),
+          style: "cancel",
+        },
+        {
+          text: "Confirm",
+          onPress: async () => {
+            const reviewId = review.node.id;
+            await deleteReview({ reviewId: reviewId });
+            apolloClient.resetStore();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
   return (
     <View style={styles.mainContainer}>
@@ -99,7 +137,12 @@ const ReviewItem = ({ review, ownReview }) => {
             {" "}
             View repository
           </Text>
-          <Text style={[styles.button, styles.redButton]}>Delete review</Text>
+          <Text
+            style={[styles.button, styles.redButton]}
+            onPress={handleDelete}
+          >
+            Delete review
+          </Text>
         </View>
       ) : (
         <></>
