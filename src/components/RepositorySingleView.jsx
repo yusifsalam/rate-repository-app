@@ -1,8 +1,6 @@
 import React from "react";
 import RepositoryItem from "./RepositoryItem";
 import { useParams } from "react-router-native";
-import { GET_REPOSITORY_WITH_REVIEWS } from "../graphql/queries";
-import { useQuery } from "@apollo/react-hooks";
 import { FlatList } from "react-native";
 import ReviewItem from "./ReviewItem";
 import { ItemSeparator } from "./RepositoryList";
@@ -19,7 +17,6 @@ const SingleRepository = () => {
     first: 5,
   });
   const handleEndReach = () => {
-    console.log("end reached");
     fetchMore();
   };
   return (
