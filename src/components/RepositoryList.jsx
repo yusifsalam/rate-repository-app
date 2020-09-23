@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import { FlatList, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
 import { useHistory } from "react-router-native";
 import RNPickerSelect from "react-native-picker-select";
+import { useDebounce } from "use-debounce";
 
 const styles = StyleSheet.create({
   separator: {
@@ -51,32 +58,32 @@ const pickerValues = [
 
 export const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({
-  repositories,
-  handlePress,
-  handleSort,
-  sortValue,
-}) => {
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : [];
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    // this.props contains the component's props
+    const props = this.props;
 
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => (
-        <TouchableOpacity onPress={() => handlePress(item.id)}>
-          <RepositoryItem item={item} showGithub={false} />
-        </TouchableOpacity>
-      )}
-      keyExtractor={(item) => item.id}
-      ListHeaderComponent={() => (
+    // ...
+
+    return (
+      <View>
+        <TextInput
+          onChangeText={props.handleSearch}
+          value={props.searchValue}
+          placeholder="Search repositories"
+          style={{
+            height: 40,
+            margin: 5,
+            borderColor: "black",
+            borderWidth: 1,
+            paddingLeft: 10,
+          }}
+        />
         <RNPickerSelect
-          onValueChange={handleSort}
+          onValueChange={props.handleSort}
           items={pickerValues}
           style={pickerSelectStyles}
-          value={sortValue}
+          value={props.sortValue}
           pickerProps={{ style: { height: "99%", overflow: "hidden" } }}
           Icon={() => {
             return (
@@ -98,10 +105,29 @@ export const RepositoryListContainer = ({
             );
           }}
         />
-      )}
-    />
-  );
-};
+      </View>
+    );
+  };
+
+  render() {
+    const repositoryNodes = this.props.repositories
+      ? this.props.repositories.edges.map((edge) => edge.node)
+      : [];
+    return (
+      <FlatList
+        data={repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => this.props.handlePress(item.id)}>
+            <RepositoryItem item={item} showGithub={false} />
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={this.renderHeader}
+      />
+    );
+  }
+}
 
 const sortMap = {
   latest: {
@@ -119,8 +145,14 @@ const sortMap = {
 };
 const RepositoryList = () => {
   const [repoSort, setRepoSort] = useState("latest");
+  const [searchKey, setSeachKey] = useState("");
+  const [serachKeywordValue] = useDebounce(searchKey, 1000);
   const sortObject = sortMap[repoSort];
-  const { repositories } = useRepositories(sortObject);
+  const { repositories } = useRepositories(
+    sortObject.orderBy,
+    sortObject.orderDirection,
+    serachKeywordValue
+  );
   const history = useHistory();
   const handlePress = (itemURI) => {
     history.push(`/repos/${itemURI}`);
@@ -130,6 +162,10 @@ const RepositoryList = () => {
     if (value) setRepoSort(value);
   };
 
+  const handleSearch = (value) => {
+    setSeachKey(value);
+  };
+
   return (
     <View>
       <RepositoryListContainer
@@ -137,6 +173,8 @@ const RepositoryList = () => {
         handlePress={handlePress}
         handleSort={handleSortChange}
         sortValue={repoSort}
+        handleSearch={handleSearch}
+        searchValue={searchKey}
       />
     </View>
   );
