@@ -8,12 +8,6 @@ import Main from "./components/Main";
 import createApolloClient from "./utils/apolloClient";
 import AuthStorage from "./utils/authStorage";
 import AuthStorageContext from "./context/AuthStorageContext";
-import { Clipboard } from "react-native";
-
-// HACK: Prevent "Expo pasted from CoreSimulator" notification from spamming continuously
-if (__DEV__) {
-  Clipboard.setString("");
-}
 
 const authStorage = new AuthStorage();
 const apolloClient = createApolloClient(authStorage);
