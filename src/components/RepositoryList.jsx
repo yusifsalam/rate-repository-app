@@ -80,7 +80,7 @@ export class RepositoryListContainer extends React.Component {
           }}
         />
         <RNPickerSelect
-          onValueChange={props.handleSort}
+          onValueChange={props.handleSort? props.handleSort: () => console.log('uh-oh')}
           items={pickerValues}
           style={pickerSelectStyles}
           value={props.sortValue}
