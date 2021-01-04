@@ -84,7 +84,7 @@ export class RepositoryListContainer extends React.Component {
           items={pickerValues}
           style={pickerSelectStyles}
           value={props.sortValue}
-          pickerProps={{ style: { height: "99%", overflow: "hidden" } }}
+          pickerProps={{ style: { height: "98%", overflow: "hidden" } }}
           Icon={() => {
             return (
               <View
